@@ -4,6 +4,7 @@ import PostList from "./components/PostList";
 import UserCard from "./components/UserCard";
 import AddPostForm from "./components/AddPostForm";
 import LoadingSpinner from "./components/LoadingSpinner";
+import UserList from "./components/UserList";
 
 
 const INITIAL_POSTS = [
@@ -105,9 +106,7 @@ function App() {
           >
             สมาชิก
           </h2>
-          {USERS.map((user) => (
-            <UserCard key={user.id} name={user.name} email={user.email} />
-          ))}
+          <UserList />
         </div>
       </div>
     </div>
