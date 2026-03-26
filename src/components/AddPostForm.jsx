@@ -27,12 +27,24 @@ function AddPostForm({ onAddPost }) {
       <h3 style={{ margin: "0 0 0.75rem", color: "#2d3748" }}>
         เพิ่มโพสต์ใหม่
       </h3>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <span>หัวข้อโพสต์</span>
+        <span
+            style={{
+                color: 100 - title.length < 10 ? "#e53e3e" : "#718096",
+                fontSize: "0.85rem",
+            }}
+        >
+            {title.length}/100
+        </span>
+    </div>
 
       <input
         type="text"
         placeholder="หัวข้อโพสต์"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        maxLength={100}
         style={{
           width: "100%",
           padding: "0.5rem",
