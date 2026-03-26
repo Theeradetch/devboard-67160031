@@ -14,37 +14,46 @@ function PostCard({ post, isFavorite, onToggleFavorite }) {
         background: "white",
       }}
     >
-      <h3 style={{ color: "#1e40af" }}>{post.title}</h3>
+      <h3 style={{ margin: "0 0 0.5rem", color: "#1e40af" }}>{post.title}</h3>
+      <p style={{ margin: "0 0 0.75rem", color: "#4a5568", lineHeight: 1.6 }}>
+        {post.body}
+      </p>
 
-      <p style={{ color: "#4a5568" }}>{post.body}</p>
-
-      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "0.5rem" }}>
+        {/* ปุ่มถูกใจ */}
         <button
           onClick={onToggleFavorite}
           style={{
-            border: "none",
             background: "none",
+            border: "none",
             cursor: "pointer",
-            color: isFavorite ? "red" : "gray",
+            fontSize: "1rem",
+            padding: "0.25rem 0.5rem",
+            borderRadius: "4px",
+            color: isFavorite ? "#e53e3e" : "#a0aec0",
           }}
         >
-          {isFavorite ? " ถูกใจแล้ว" : " ถูกใจ"}
+          {isFavorite ? "❤️ ถูกใจแล้ว" : "🤍 ถูกใจ"}
         </button>
 
+        {/* ปุ่มดูความคิดเห็น */}
         <button
-          onClick={() => setShowComments(!showComments)}
+          onClick={() => setShowComments((prev) => !prev)}
           style={{
-            border: "none",
             background: "none",
+            border: "1px solid #e2e8f0",
             cursor: "pointer",
-            color: "#1e40af",
+            fontSize: "0.9rem",
+            padding: "0.25rem 0.75rem",
+            borderRadius: "4px",
+            color: "#4a5568",
           }}
         >
-          {showComments ? "ซ่อนความคิดเห็น" : "ดูความคิดเห็น"}
+          {showComments ? "▲ ซ่อน" : "▼ ดูความคิดเห็น"}
         </button>
       </div>
 
-      {/*  ดึง API comments ตอนกดปุ่ม */}
+      {/* แสดง comments เมื่อกด — fetch เกิดขึ้นตอนนี้ */}
       {showComments && <CommentList postId={post.id} />}
     </div>
   );
