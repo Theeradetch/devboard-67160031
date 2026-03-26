@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import PostList from "./components/PostList";
 import UserCard from "./components/UserCard";
+import { useState } from "react";
 
 const POSTS = [
   {
@@ -32,6 +33,16 @@ const USERS = [
 ];
 
 function App() {
+  const [favorites, setFavorites] = useState([]);
+
+  const handleToggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id)
+        ? prev.filter((f) => f !== id)
+        : [...prev, id]
+    );
+  };
+
   return (
     <div>
       <Navbar />
@@ -47,7 +58,11 @@ function App() {
       >
         {/* คอลัมน์ซ้าย: โพสต์ */}
         <div>
-          <PostList posts={POSTS} />
+          <PostList
+            posts={POSTS}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
+          />
         </div>
 
         {/* คอลัมน์ขวา: สมาชิก */}
