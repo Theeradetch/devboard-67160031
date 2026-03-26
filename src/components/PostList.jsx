@@ -9,6 +9,28 @@ function PostList({ favorites, onToggleFavorite }) {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
 
+    async function fetchPosts() {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+
+      if (!res.ok) throw new Error("ดึงข้อมูลไม่สำเร็จ");
+
+      const data = await res.json();
+      setPosts(data.slice(0, 20));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   useEffect(() => {
     async function fetchPosts() {
       try {
@@ -46,9 +68,14 @@ function PostList({ favorites, onToggleFavorite }) {
 
   return (
     <div>
+     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <h2 style={{ borderBottom: "2px solid #1e40af", paddingBottom: "0.5rem" }}>
         โพสต์ล่าสุด
       </h2>
+        <button onClick={fetchPosts} disabled={loading}>
+          🔄 โหลดใหม่
+        </button>
+    </div>
       <PostCount count={filtered.length} />
       <input
         type="text"
