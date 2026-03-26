@@ -40,10 +40,6 @@ function App() {
   return (
     <div>
       <Navbar />
-      <PostCard 
-        title="ทดสอบ" 
-        body="นี่คือเนื้อหาทดสอบ" 
-      />
       <PostList posts={POSTS} />
     </div>
   );
