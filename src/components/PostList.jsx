@@ -14,54 +14,42 @@ function PostList({ favorites, onToggleFavorite }) {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch("https://jsonplaceholder.typicode.com/postss");
+
+        const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+
         if (!res.ok) throw new Error("ดึงข้อมูลไม่สำเร็จ");
+
         const data = await res.json();
-        setPosts(data.slice(0, 20)); // เอาแค่ 20 รายการแรก
+        setPosts(data.slice(0, 20));
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     }
+
     fetchPosts();
-  }, []); // [] = ทำครั้งเดียวตอน component mount
+  }, []);
 
   const filtered = posts.filter((post) =>
-    post.title.toLowerCase().includes(search.toLowerCase()),
+    post.title.toLowerCase().includes(search.toLowerCase())
   );
 
   if (loading) return <LoadingSpinner />;
 
   if (error)
     return (
-      <div
-        style={{
-          padding: "1.5rem",
-          background: "#fff5f5",
-          border: "1px solid #fc8181",
-          borderRadius: "8px",
-          color: "#c53030",
-        }}
-      >
+      <div style={{ padding: "1.5rem", background: "#fff5f5", border: "1px solid #fc8181", borderRadius: "8px", color: "#c53030" }}>
         เกิดข้อผิดพลาด: {error}
       </div>
     );
 
   return (
     <div>
-      <h2
-        style={{
-          color: "#2d3748",
-          borderBottom: "2px solid #1e40af",
-          paddingBottom: "0.5rem",
-        }}
-      >
+      <h2 style={{ borderBottom: "2px solid #1e40af", paddingBottom: "0.5rem" }}>
         โพสต์ล่าสุด
       </h2>
-
       <PostCount count={filtered.length} />
-
       <input
         type="text"
         placeholder="ค้นหาโพสต์..."
@@ -79,7 +67,7 @@ function PostList({ favorites, onToggleFavorite }) {
       />
 
       {filtered.length === 0 && (
-        <p style={{ color: "#718096", textAlign: "center", padding: "2rem" }}>
+        <p style={{ textAlign: "center", color: "#718096" }}>
           ไม่พบโพสต์ที่ค้นหา
         </p>
       )}
