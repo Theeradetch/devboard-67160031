@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import PostList from "./components/PostList";
 import UserCard from "./components/UserCard";
 import AddPostForm from "./components/AddPostForm";
+import LoadingSpinner from "./components/LoadingSpinner";
+
 
 const INITIAL_POSTS = [
   {
@@ -36,6 +38,13 @@ const USERS = [
 function App() {
   const [posts, setPosts] = useState(INITIAL_POSTS);
   const [favorites, setFavorites] = useState([]); // เก็บ id ที่ถูกใจ
+  const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+     setTimeout(() => {
+      setLoading(false);
+     }, 1500);
+    }, []);
 
   // Toggle ถูกใจ/ยกเลิก
   function handleToggleFavorite(postId) {
@@ -74,11 +83,15 @@ function App() {
         {/* คอลัมน์ซ้าย */}
         <div>
           <AddPostForm onAddPost={handleAddPost} />
+          {loading ? (
+            <LoadingSpinner />
+        ) : (
           <PostList
             posts={posts}
             favorites={favorites}
             onToggleFavorite={handleToggleFavorite}
-          />
+         />
+        )}
         </div>
 
         {/* คอลัมน์ขวา */}
